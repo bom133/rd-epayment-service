@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>RD E-Payment</title>
+</head>
+<body>
+<p>
+	  <span>แจ้งปัญหาการรับข้อมูลผลการรับชำระ</span><br>
+	  <span th:text="${errBankCode}"></span><br>
+	  <span th:text="${errPaymentLine}"></span><br>
+	  <span th:text="${errDesc}"></span>
+</p>
+<script th:inline="javascript">
+/*<![CDATA[*/
+	var error = /*[[${bankCode}]]*/;
+	if (!error) {
+		window.location.href = /*[[${page}]]*/;
+	} 
+/*]]>*/
+</script>
+</body>
+</html>

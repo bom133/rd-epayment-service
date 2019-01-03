@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings
+    xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+    version="2.0">
+ 
+<!--Implement Native Query -Start -->
+    <named-native-query name="searchMasterReceiverUnit">
+        <query>
+            <![CDATA[
+SELECT m.MASTER_RECEIVER_UNIT_ID
+FROM MASTER_RECEIVER_UNIT m
+WHERE 1 = 1
+                ]]>
+        </query>
+    </named-native-query>
+    <named-native-query name="findSystemInfoAll">
+        <query>
+            <![CDATA[
+SELECT MASTER_SYSTEM_INFO_ID, SYSTEM_CODE, SYSTEM_NAME, DESCRIPTION, CLIENT_ID, SECRET_ID, STATUS 
+FROM MASTER_SYSTEM_INFO ORDER BY SYSTEM_CODE
+                ]]>
+        </query>
+    </named-native-query>
+    <named-native-query name="findSystemInfoByCriteria">
+        <query>
+            <![CDATA[
+SELECT MASTER_SYSTEM_INFO_ID, SYSTEM_CODE, SYSTEM_NAME, DESCRIPTION, CLIENT_ID, SECRET_ID, STATUS 
+FROM MASTER_SYSTEM_INFO
+                ]]>
+        </query>
+    </named-native-query>
+    <named-native-query name="findSystemInfoByID">
+        <query>
+            <![CDATA[
+SELECT MASTER_SYSTEM_INFO_ID, SYSTEM_CODE, SYSTEM_NAME, DESCRIPTION, CLIENT_ID, SECRET_ID, STATUS 
+FROM MASTER_SYSTEM_INFO
+WHERE MASTER_SYSTEM_INFO_ID
+                ]]>
+        </query>
+    </named-native-query>
+    
+    <named-native-query name="findEpayRecPayLineByCriteria">
+        <query>
+            <![CDATA[
+SELECT e.EPAY_RECEIVER_PAYMENT_LINE_ID, p.PAY_LINE_CODE, e.DESCRIPTION, e.START_DATE, e.END_DATE, 
+                ]]>
+        </query>
+    </named-native-query>
+    
+    <named-native-query name="findPaymentLineByCriteria">
+        <query>
+            <![CDATA[
+SELECT p.MASTER_PAYMENT_LINE_ID, p.PAY_LINE_CODE, 
+                ]]>
+        </query>
+    </named-native-query>
+    
+    <named-native-query name="findEpayParameterByCriteria">
+        <query>
+            <![CDATA[
+SELECT EPAY_PARAMETER_ID, PARAM_CODE, PARAM_TYPE, PARAM_VALUE, DESCRIPTION 
+FROM EFEPAY_DEV.EPAY_PARAMETER
+WHERE 1=1 
+                ]]>
+        </query>
+    </named-native-query>
+    
+    <named-native-query name="findAuthByCriteria">
+        <query>
+            <![CDATA[
+SELECT a.EPAY_AUTHORIZATION_ID, a.AUTH_CODE, a.DESCRIPTION, 
+                ]]>
+        </query>
+    </named-native-query>
+<!--Implement Native Query -End -->   
+</entity-mappings>   
+   

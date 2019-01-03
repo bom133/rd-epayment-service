@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "rd-epayment-service",
+                "projectName": "rd-epayment-service",
+                "workingDirectory": "d:\\Projects\\Github\\rd-epayment-service",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "rd-epayment-service",
+                "projectName": "rd-epayment-service",
+                "workingDirectory": "d:\\Projects\\Github\\rd-epayment-service",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

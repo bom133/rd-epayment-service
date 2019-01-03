@@ -1,0 +1,210 @@
+server.max-http-header-size: 10000000
+
+application:
+  name: '@project.artifactId@'
+  loglevel: 'error'
+build:
+  version: '@project.version@'
+  timestamp: '@timestamp@'
+  
+spring:
+  application:
+    name: rd-epayment-service
+  messages:
+    basename: i18n/message
+
+security:
+  oauth2:
+    resource:
+      id: efiling
+      jwt:
+        key-value: |
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtIDw5AUfDa2etZiR4Eo3
+          MPzR7qVH+Ebp0/b4PoTlT4ZEvmFpcg4JAbsv6W0BT/N60DKiJJU0slFUwEXXTCws
+          DGCzKvOVdcebhh9v5+cZdpMBxhxqJEFpiQn+RZ18tmxKSMvYvE189uLN3jzWvyHR
+          bdp05FNNf2mF2BH8UkqItpR6wmgGJhBTB0ACt37Ps1tyAPeOoUBPmjTxhwAVPtlN
+          N55sVjtPmjtYq1e9ixJFYTDLcRlMh1bmQrgWjeaKX6gb8uF13HORV9/8tkoumnik
+          QXjbAvUsQi6xTi9G+I/Ijmzso8wgrBwjAJGvGLgumkf/y7znVXbZK79UDKGOXW/e
+          0QIDAQAB
+          -----END PUBLIC KEY-----
+          
+payment-std:
+    epay-service: http://10.11.2.25:8770/rd-epayment-service
+    uri: /epay/payment-out/std/
+    xml-path: D:\epayment_xml\
+    pki-service: http://rd-pki-service/rd-pki-service
+    api-pki-sign-xml: /pki/digital-signature/sign-encrypt-xml
+    api-pki-verify-xml: /pki/digital-signature/verify-decrypt-xml
+    api-pki-certificate-list: /pki/certificate/display-all-by-criteria
+    client_id: 7
+    secret_id: 123
+    rd-keystore: 124
+    rec-keystore: 125
+---
+spring:
+  profiles: dev
+  datasource:
+  #INTERNET 27.131.178.6 , INTERNAL 10.11.3.100
+#    url: jdbc:db2://27.131.178.6:50000/EFDB:currentSchema=EFEPAY;
+#    url: jdbc:db2://10.11.3.100:50000/EFDB:currentSchema=EFEPAY;
+    url: jdbc:db2://10.11.3.100:50000/EFDB:currentSchema=EFEPAY_DEV;progressiveStreaming=2;
+    username: efuser
+    password: efuser
+    driver-class-name: com.ibm.db2.jcc.DB2Driver
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.DB2Dialect
+    database-platform: org.hibernate.dialect.DB2Dialect
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+  payment-std:
+      epay-service: http://10.11.2.25:8770/rd-epayment-service
+      uri: /epay/payment-out/std/
+      redirect-url: http://localhost:4200/e-payment/payment-result
+      xml-path: D:\epayment_xml\ 
+      pki-service: http://10.11.2.25:8769/rd-pki-service
+      api-pki-sign-xml: /pki/digital-signature/sign-encrypt-xml
+      api-pki-verify-xml: /pki/digital-signature/verify-decrypt-xml
+      api-pki-certificate-list: /pki/certificate/display-all-by-criteria
+      client_id: 7
+      secret_id: 123
+      rd-keystore: 124
+      rec-keystore: 125
+      
+logging:
+  level:
+    org.hibernate.type: TRACE
+    com.netflix.discovery: OFF
+    
+eureka:
+  instance:
+    e1-hostname: node2
+    e1-port: 8761
+    e2-hostname: node3
+    e2-port: 8761
+  client:
+    registerWithEureka: false
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.e2-hostname}:${eureka.instance.e2-port}/eureka/,http://${eureka.instance.e1-hostname}:${eureka.instance.e1-port}/eureka/
+      healthcheck:
+        enabled: true      
+
+---          
+spring:
+  profiles: sit
+  datasource:
+  #INTERNET 27.131.178.6 , INTERNAL 10.11.3.100
+#    url: jdbc:db2://27.131.178.6:50000/EFDB:currentSchema=EFEPAY;
+#    url: jdbc:db2://10.11.3.100:50000/EFDB:currentSchema=EFEPAY;progressiveStreaming=2;
+#    url: jdbc:db2://10.11.3.100:50000/EFDB:currentSchema=EFEPAY_DEV;progressiveStreaming=2;
+    url: jdbc:db2://sedb2:50000/EFDB:currentSchema=EFEPAY_DEV;progressiveStreaming=2;
+    username: efuser
+    password: efuser
+    driver-class-name: com.ibm.db2.jcc.DB2Driver
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.DB2Dialect
+    database-platform: org.hibernate.dialect.DB2Dialect
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+  payment-std:
+      epay-service: http://10.11.2.25:8770/rd-epayment-service
+      uri: /epay/payment-out/std/
+      redirect-url: /epay/taxpayer/display-payment-result/
+      xml-path: D:\epayment_xml\
+#     pki-service: http://10.11.2.25:8769/rd-pki-service
+      pki-service: http://rd-pki-service/rd-pki-service
+      api-pki-sign-xml: /pki/digital-signature/sign-encrypt-xml
+      api-pki-verify-xml: /pki/digital-signature/verify-decrypt-xml
+      api-pki-certificate-list: /pki/certificate/display-all-by-criteria
+      client_id: 7
+      secret_id: 123
+      rd-keystore: 124
+      rec-keystore: 125 
+    
+logging:
+  level:
+    org.hibernate.type: OFF
+    com.netflix.discovery: OFF
+    
+#eureka:
+#  instance:
+#    e1-hostname: node2
+#    e1-port: 8761
+#    e2-hostname: node3
+#    e2-port: 8761
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    serviceUrl:
+#      defaultZone: http://${eureka.instance.e2-hostname}:${eureka.instance.e2-port}/eureka/,http://${eureka.instance.e1-hostname}:${eureka.instance.e1-port}/eureka/
+#      healthcheck:
+#        enabled: true          
+      
+---
+spring:
+  profiles: test
+  datasource:
+  #INTERNET 27.131.178.6 , INTERNAL 10.11.3.100
+#    url: jdbc:db2://27.131.178.6:50000/EFDB:currentSchema=EFEPAY;
+    url: jdbc:db2://10.11.3.100:50000/EFDB:currentSchema=EFEPAY;
+#    url: jdbc:db2://10.11.3.100:50000/EFDB:currentSchema=EFEPAY_DEV;
+    username: efuser
+    password: efuser
+    driver-class-name: com.ibm.db2.jcc.DB2Driver
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.DB2Dialect
+    database-platform: org.hibernate.dialect.DB2Dialect
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+  cloud:
+    config:
+      uri: http://192.168.33.18:8770/rd-epayment-service
+  payment-std:
+      redirect-url: http://10.11.2.21:4200/rd-efiling-web/e-payment/payment-result 
+      xml-path: D:\epayment_xml\ 
+      
+logging:
+  level:
+    org.hibernate.type: TRACE
+    com.netflix.discovery: OFF
+    
+eureka:
+  instance:
+    e1-hostname: node2
+    e1-port: 8761
+    e2-hostname: node3
+    e2-port: 8761
+  client:
+    registerWithEureka: false
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.e2-hostname}:${eureka.instance.e2-port}/eureka/,http://${eureka.instance.e1-hostname}:${eureka.instance.e1-port}/eureka/
+      healthcheck:
+        enabled: true      
+      
+        

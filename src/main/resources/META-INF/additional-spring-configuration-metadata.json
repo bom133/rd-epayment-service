@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "payment-std.uri",
+    "type": "java.lang.String",
+    "description": "A description for 'payment-std.uri'"
+  },
+  {
+    "name": "spring.payment-std.redirect-url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.payment-std.redirect-url'"
+  },
+  {
+    "name": "spring.payment-std.xml-path",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.payment-std.xml-path'"
+  },
+  {
+    "name": "payment-std.xml-path",
+    "type": "java.lang.String",
+    "description": "A description for 'payment-std.xml-path'"
+  }
+]}
