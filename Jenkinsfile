@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-                NEXUS_CREDS = credentials('senexus-credential')
-                DOCKER_PROXY_HOST = "senexus.pccth.com:8082"
-                DOCKER_PRIVATE_HOST = "senexus.pccth.com:8083"
+                NEXUS_CREDS = credentials('nxustoon-credential')
+                DOCKER_PROXY_HOST = "nexustoon.com:8082"
+                DOCKER_PRIVATE_HOST = "nexustoon.com:8083"
                 REPLICACOUNT = "1"
                 //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
                 PROJECT_VERSION = readMavenPom().getVersion()
