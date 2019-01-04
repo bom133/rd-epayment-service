@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-                NEXUS_CREDS = credentials('nxustoon-credential')
+                NEXUS_CREDS = credentials('nexustoon-credential')
                 DOCKER_PROXY_HOST = "nexustoon.com:8082"
                 DOCKER_PRIVATE_HOST = "nexustoon.com:8083"
                 REPLICACOUNT = "1"
