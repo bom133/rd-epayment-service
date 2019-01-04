@@ -1,4 +1,4 @@
-FROM nexsutoon.com:8082/websphere-liberty:springBoot2
+FROM nexustoon.com:8082/websphere-liberty:springBoot2
 ARG program_name
 LABEL Author="chaypon@pccth.com"
 COPY /target/${program_name}.war /config/dropins/
