@@ -24,7 +24,7 @@ pipeline {
                 sh "docker build --build-arg program_name=${PROJECT_NAME} -t ${DOCKER_PRIVATE_HOST}/${PROJECT_NAME}:${PROJECT_VERSION} ."
             }
         }
-        
+    }    
             
         
     
