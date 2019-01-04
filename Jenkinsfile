@@ -34,6 +34,40 @@ pipeline {
                 //sh "docker push nexustoon.com:8083/rd-epayment-service:0.1.3-SNAPSHOT"
             }
         }
+        stage("Deploy to kubernetes") {
+            steps {
+                //script must be approved
+                //new java.io.File java.lang.String
+                //staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getText java.io.File
+                //staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods write java.io.File java.lang.String
+                //before using this script
+                //script{
+                //    def chartFile = new File("${WORKSPACE}/deployment/Chart.yaml")
+                //    def chartText = chartFile.text
+                //    appVersionReplaceStr = "appVersion: ${PROJECT_VERSION}"
+                //    nameReplaceStr = "name: ${PROJECT_NAME}"
+                //    versionReplaceStr = "version: ${PROJECT_VERSION}"
+                //    chartText = chartText.replace("appVersion: dummy",appVersionReplaceStr)
+                //    chartText = chartText.replace("name: dummy",nameReplaceStr)
+                //    chartText = chartText.replace("version: dummy",versionReplaceStr)
+                //    chartFile.write(chartText)
+                //}
+                sh """
+                    perl -pi -e "s/appVersion:.*/appVersion: ${PROJECT_VERSION}/" ./deployment/Chart.yaml
+                    perl -pi -e "s/name:.*/name: ${PROJECT_NAME}/" ./deployment/Chart.yaml
+                    perl -pi -e "s/version:.*/version: ${PROJECT_VERSION}/" ./deployment/Chart.yaml
+                    helm ls
+                    helm upgrade --install --debug ${PROJECT_NAME} ./deployment \
+                    --set image.tag=${PROJECT_VERSION} \
+                    --set image.repository=${DOCKER_PRIVATE_HOST}/${PROJECT_NAME} \
+                    --set replicaCount=${REPLICACOUNT} \
+                    --set healthcheck.enabled=false \
+                    --set healthcheck.livenessprobe=/${PROJECT_NAME}/swagger-ui.html \
+                    --set healthcheck.readynessprobe=/${PROJECT_NAME}/swagger-ui.html \
+                    --wait --timeout 180
+                """
+            }
+        }
     }    
             
         
