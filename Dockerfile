@@ -1,6 +1,6 @@
-FROM senexus.pccth.com:8082/websphere-liberty:springBoot2
+FROM nexsutoon.com:8082/websphere-liberty:springBoot2
 ARG program_name
-LABEL Author="sanprasirt@pccth.com"
+LABEL Author="chaypon@pccth.com"
 COPY /target/${program_name}.war /config/dropins/
 COPY /server.xml /config/
 USER root
